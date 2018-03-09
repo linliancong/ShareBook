@@ -12,8 +12,8 @@ public class SharedPreferenceUtils {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
 
-    public SharedPreferenceUtils(Context context, String file){
-        sp=context.getSharedPreferences(file,context.MODE_PRIVATE);
+    public SharedPreferenceUtils(Context context){
+        sp=context.getSharedPreferences("UserInfo",context.MODE_PRIVATE);
         editor=sp.edit();
     }
 
@@ -92,6 +92,17 @@ public class SharedPreferenceUtils {
     public boolean getIsFirst() {
         return sp.getBoolean("isFirst", true);
     }
+
+    // 是否游客登录
+    public void setIsVisitor(boolean isVisitor) {
+        editor.putBoolean("isVisitor", isVisitor);
+        editor.commit();
+    }
+
+    public boolean getIsVisitor() {
+        return sp.getBoolean("isVisitor", true);
+    }
+
     // 是否第一次检查更新
     public void setIsFirstUpdate(boolean isFirst) {
         editor.putBoolean("isFirst", isFirst);
@@ -109,7 +120,7 @@ public class SharedPreferenceUtils {
     }
 
     public boolean getIsNetworkConnect(){
-        return sp.getBoolean("IsNetworkConnect",false);
+        return sp.getBoolean("IsNetworkConnect",true);
     }
 
 

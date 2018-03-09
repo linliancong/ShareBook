@@ -16,7 +16,7 @@
 
 
         <com.develop.util.ImgTxtLayout
-            android:id="@+id/regi_back"
+            android:id="@+id/find_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="注册"
+            android:text="找回密码"
             android:textSize="18sp"
             android:textColor="@color/black"
             android:layout_centerInParent="true"
@@ -77,52 +77,12 @@
                     android:textColor="@color/black"
                     />
                 <EditText
-                    android:id="@+id/regi_email"
+                    android:id="@+id/find_email"
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:hint="用于找回密码"
-                    android:textSize="14sp"
-                    android:layout_marginLeft="10dp"
-                    />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/black_line"
-                android:layout_alignParentBottom="true"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/ly2"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_below="@+id/ly1"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:padding="10dp"
-                >
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="用户名"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    />
-                <EditText
-                    android:id="@+id/regi_username"
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="输入用户名"
+                    android:hint="输入注册时的邮箱"
                     android:textSize="14sp"
                     android:layout_marginLeft="10dp"
                     />
@@ -139,7 +99,7 @@
             android:id="@+id/ly3"
             android:layout_width="match_parent"
             android:layout_height="46dp"
-            android:layout_below="@+id/ly2"
+            android:layout_below="@+id/ly1"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -157,7 +117,7 @@
                     android:textColor="@color/black"
                     />
                 <EditText
-                    android:id="@+id/regi_pwd1"
+                    android:id="@+id/find_pwd1"
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:layout_height="wrap_content"
@@ -198,7 +158,7 @@
                     android:textColor="@color/black"
                     />
                 <EditText
-                    android:id="@+id/regi_pwd2"
+                    android:id="@+id/find_pwd2"
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:layout_height="wrap_content"
@@ -232,30 +192,36 @@
                 >
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_height="wrap_content"
                     android:text="验证码"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     />
                 <EditText
-                    android:id="@+id/regi_code"
+                    android:id="@+id/find_code"
                     android:layout_width="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:hint="验证码"
+                    android:hint="输入验证码"
                     android:textSize="14sp"
                     android:layout_marginLeft="10dp"
                     />
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="46dp">
-                    <ImageView
-                        android:id="@+id/regi_imgcode"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:layout_height="46dp"
+                    android:gravity="center"
+                    >
+                    <Button
+                        android:id="@+id/find_send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="发送验证码"
+                        android:background="@drawable/login_button"
+                        android:textColor="@color/bg_white"
+                        android:enabled="false"
                         />
                 </LinearLayout>
 
@@ -271,7 +237,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/regi_btn"
+        android:id="@+id/find_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout"
@@ -279,7 +245,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:alpha="1"
-        android:text="注册"
+        android:text="确认找回"
         android:textSize="18sp"
         android:textColor="@color/bg_white"
         android:enabled="false"

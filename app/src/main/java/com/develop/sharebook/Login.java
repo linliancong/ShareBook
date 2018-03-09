@@ -61,7 +61,7 @@ public class Login extends StatusBarUtil implements View.OnClickListener,TextWat
     private void init() {
         context=Login.this;
         op=new SqlOperator(context);
-        sp=new SharedPreferenceUtils(context,"UserInfo");
+        sp=new SharedPreferenceUtils(context);
 
         login = findViewById(R.id.btn_login);
         v_login=findViewById(R.id.visitor_login);
@@ -89,44 +89,59 @@ public class Login extends StatusBarUtil implements View.OnClickListener,TextWat
         switch (v.getId()){
             //登录
             case R.id.btn_login:
-                List<Map<String,String>> data=new ArrayList<>();
-                Map<String,String> map=new HashMap<>();
-                data=op.select("select * from user where username=? and passwd=?",new String[]{user.getText().toString(),passwd.getText().toString()});
-                if(data.get(0)!=null){
-                    map=data.get(0);
-                    if(map.get("userName").toString().equals(user.getText().toString())){
-                        //验证成功
-                        Toast.makeText(context,"验证成功！",Toast.LENGTH_SHORT).show();
-                        sp.setIsFirst(false);
-                        sp.setID(map.get("id"));
-                        sp.setUserName(map.get("userName"));
-                        sp.setPWD(map.get("passwd"));
-                        sp.setName(map.get("name"));
-                        Intent it1=new Intent(context,HomePage.class);
-                        startActivity(it1);
-                        finish();
+                if(!sp.getIsNetworkConnect())
+                {
+                    Toast.makeText(Login.this,"网络不可用，请检查连接",Toast.LENGTH_SHORT).show();
+                }else {
+                    List<Map<String, String>> data = new ArrayList<>();
+                    Map<String, String> map = new HashMap<>();
+                    data = op.select("select * from user where username=? and passwd=?", new String[]{user.getText().toString(), passwd.getText().toString()});
+                    if (data.size()!=0) {
+                        map = data.get(0);
+                        if (map.get("userName").toString().equals(user.getText().toString())) {
+                            //验证成功
+                            Toast.makeText(context, "验证成功！", Toast.LENGTH_SHORT).show();
+                            sp.setIsFirst(false);
+                            sp.setID(map.get("id"));
+                            sp.setUserName(map.get("userName"));
+                            sp.setPWD(map.get("passwd"));
+                            sp.setName(map.get("name"));
+                            //设置登录标记
+                            sp.setIsVisitor(false);
+                            Intent it1 = new Intent(context, HomePage.class);
+                            startActivity(it1);
+                            finish();
 
-                    }else
-                    {
+                        } else {
+                            //验证失败
+                            Toast.makeText(context, "用户名或密码有误，请重新输入！", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
                         //验证失败
-                        Toast.makeText(context,"用户名或密码有误，请重新输入！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "用户名或密码有误，请重新输入！", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
             //游客登录
             case R.id.visitor_login:
+                //设置登录标记
+                sp.setIsVisitor(true);
                 Intent it2=new Intent(context,HomePage.class);
                 startActivity(it2);
+                finish();
                 break;
             //注册
             case R.id.signin:
                 Intent it3=new Intent(context,Register.class);
                 startActivity(it3);
+                finish();
                 break;
             //找回密码
             case R.id.losepwd:
-                Intent it4=new Intent(context,Register.class);
+                Intent it4=new Intent(context,FindPWD.class);
                 startActivity(it4);
+                finish();
                 break;
         }
 

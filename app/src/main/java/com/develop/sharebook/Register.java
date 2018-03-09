@@ -54,7 +54,7 @@ public class Register extends StatusBarUtil implements View.OnClickListener,Text
 
     private void init() {
         context=Register.this;
-        sp=new SharedPreferenceUtils(context,"UserInfo");
+        sp=new SharedPreferenceUtils(context);
         op=new SqlOperator(context);
         email=findViewById(R.id.regi_email);
         user=findViewById(R.id.regi_username);
@@ -92,41 +92,57 @@ public class Register extends StatusBarUtil implements View.OnClickListener,Text
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.regi_btn:
-                //判断验证码
-                if(realCode.equals(code.getText().toString())) {
-                    //判断密码
-                    if (pwd1.getText().toString().equals(pwd2.getText().toString())) {
-                        //判断用户名
-                        List<Map<String,String>> data=new ArrayList<>();
-                        Map<String,String> map=new HashMap<>();
-                        data=op.select("select count(1) num from user where username=?",new String[]{user.getText().toString()});
-                        if(data.get(0)!=null){
-                            map=data.get(0);
-                            if(map.get("num").toString().equals("1")){
-                                Toast.makeText(context,"用户名已存在，重新输入用户名",Toast.LENGTH_SHORT).show();
-                                imgCode.setImageBitmap(Code.getInstance().createBitmap());
-                                realCode=Code.getInstance().getCode().toLowerCase();
+                if(!sp.getIsNetworkConnect())
+                {
+                    Toast.makeText(context,"网络不可用，请检查连接",Toast.LENGTH_SHORT).show();
+                }else {
+                    //判断验证码
+                    if (realCode.equals(code.getText().toString())) {
+                        //判断密码
+                        if (pwd1.getText().toString().equals(pwd2.getText().toString())) {
+                            //判断用户名
+                            List<Map<String, String>> data = new ArrayList<>();
+                            Map<String, String> map = new HashMap<>();
+                            data = op.select("select count(1) num from user where username=?", new String[]{user.getText().toString()});
+                            if (data.size() != 0) {
+                                map = data.get(0);
+                                if (map.get("num").toString().equals("1")) {
+                                    Toast.makeText(context, "用户名已存在，重新输入用户名", Toast.LENGTH_SHORT).show();
+                                    imgCode.setImageBitmap(Code.getInstance().createBitmap());
+                                    realCode = Code.getInstance().getCode().toLowerCase();
+                                } else {
+                                    //判断邮箱
+                                    data = new ArrayList<>();
+                                    map = new HashMap<>();
+                                    data = op.select("select count(1) num from user where email=?", new String[]{email.getText().toString()});
+                                    if (data.size() != 0) {
+                                        map = data.get(0);
+                                        if (map.get("num").toString().equals("1")) {
+                                            Toast.makeText(context, "邮箱已存在，重新输入邮箱或者找回密码", Toast.LENGTH_SHORT).show();
+                                            imgCode.setImageBitmap(Code.getInstance().createBitmap());
+                                            realCode = Code.getInstance().getCode().toLowerCase();
+                                        } else {
+                                            op.insert("insert into user(userName,passwd,email,name) values(?,?,?,?)", new String[]{user.getText().toString(),
+                                                    pwd1.getText().toString(), email.getText().toString(), user.getText().toString()});
+                                            Toast.makeText(context, "注册成功！返回重新登录", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(context, Login.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
+                                }
                             }
-                            else {
-                                op.insert("insert into user(userName,passwd,email,name) values(?,?,?,?)", new String[]{user.getText().toString(),
-                                        pwd1.getText().toString(), email.getText().toString(), user.getText().toString()});
-                                Toast.makeText(context,"注册成功！返回重新登录",Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(context,Login.class);
-                                startActivity(intent);
-                                finish();
-                            }
+
+                        } else {
+                            Toast.makeText(context, "两次输入的密码不匹配，请重新输入", Toast.LENGTH_SHORT).show();
+                            imgCode.setImageBitmap(Code.getInstance().createBitmap());
+                            realCode = Code.getInstance().getCode().toLowerCase();
                         }
-                    }
-                    else {
-                        Toast.makeText(context,"两次输入的密码不匹配，请重新输入",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "验证码输入有误，请重新输入", Toast.LENGTH_SHORT).show();
                         imgCode.setImageBitmap(Code.getInstance().createBitmap());
-                        realCode=Code.getInstance().getCode().toLowerCase();
+                        realCode = Code.getInstance().getCode().toLowerCase();
                     }
-                }
-                else {
-                    Toast.makeText(context,"验证码输入有误，请重新输入",Toast.LENGTH_SHORT).show();
-                    imgCode.setImageBitmap(Code.getInstance().createBitmap());
-                    realCode=Code.getInstance().getCode().toLowerCase();
                 }
                 break;
             case R.id.regi_imgcode:

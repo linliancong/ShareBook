@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:develop="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black_bg"
+    >
+
+    <RelativeLayout
+        android:id="@+id/person_ly_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+
+        <ImageView
+            android:id="@+id/person_img_tx"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_toRightOf="@+id/person_img_tx"
+            android:paddingLeft="10dp"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/person_txt_tx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/person_txt_tx2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/black_overlay"
+                android:paddingTop="6dp"
+                />
+
+        </LinearLayout>
+
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:spacing="4dp"
+            develop:style="iconRight"
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_ly_xm"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/person_txt_xm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="姓名"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_xm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:style="iconRight"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black_line"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_ly_zh"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/person_txt_zh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="账号"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_zh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:style="iconRight"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black_line"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_ly_yx"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/person_txt_yx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="邮箱"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_yx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:style="iconRight"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black_line"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_ly_gxqm"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/person_txt_gxqm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="个性签名"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_gxqm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:style="iconRight"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_ly_sfz"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/person_txt_sfz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="身份证"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_sfz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:spacing="4dp"
+            develop:style="iconRight"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_ly_sj"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/person_txt_sj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="手机"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_sj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:style="iconRight"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black_line"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_ly_qq"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/person_txt_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="QQ"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:style="iconRight"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black_line"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_ly_dz"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/person_txt_dz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="地址"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_dz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:style="iconRight"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black_line"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_ly_sche"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_gray_opc"
+        android:visibility="gone"
+        >
+        <ImageView
+            android:id="@+id/person_img_sche"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/anima_sche"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

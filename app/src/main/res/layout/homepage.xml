@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -15,13 +15,14 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/hp_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@color/bg_white"
             android:fitsSystemWindows="true"
             android:minHeight="?attr/actionBarSize"
             android:popupTheme="@style/Widget.AppCompat.ActionBar"
             app:theme="@style/Widget.AppCompat.Light.ActionBar">
             <TextView
+                android:id="@+id/hp_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="首页"
@@ -29,11 +30,31 @@
                 android:singleLine="true"
                 android:layout_gravity="center"
                 />
+
         </android.support.v7.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/hp_scan"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/ic_launcher_round"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/hp_vpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/hp_toolbar"
+            >
+
+        </android.support.v4.view.ViewPager>
 
         <!--内容区-->
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/hp_navview"

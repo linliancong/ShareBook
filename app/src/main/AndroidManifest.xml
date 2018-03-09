@@ -25,6 +25,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".FindPWD">
+            <intent-filter>
+                <action android:name="android.intent.action.FINDPWD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.HOMEPAGE" />
@@ -32,6 +39,44 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".PersonUpdate">
+            <intent-filter>
+                <action android:name="android.intent.action.PERSONUPDATE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+
+        <!--监听网络变化的广播-->
+        <receiver android:name="com.develop.util.NetWorkBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+        <!--首页设置广播-->
+        <receiver android:name=".PersonInfo$MyBroadcast">
+            <intent-filter>
+                <action android:name="com.zxhl.gpsking.MYBROADCASTHO"/>
+
+            </intent-filter>
+        </receiver>
+
     </application>
+
+    <!--权限配置-->
+    <!--设置可以访问网络-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 指定添加权限   获取网络信息状态，如当前的网络连接是否有效-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--获取存储权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    !--发送系统广播-->
+    <uses-permission android:name="android.permission.CONTROL_KEYGUARD"/>
 
 </manifest>

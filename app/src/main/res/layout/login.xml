@@ -89,6 +89,7 @@
         android:alpha="1"
         android:text="登录"
         android:textSize="18sp"
+        android:textColor="@color/bg_white"
         android:enabled="false"
         android:background="@drawable/login_button"
         />
@@ -103,6 +104,7 @@
         android:alpha="1"
         android:text="游客登录"
         android:textSize="18sp"
+        android:textColor="@color/bg_white"
         android:background="@drawable/login_button"
         />
 
