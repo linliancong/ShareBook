@@ -93,8 +93,8 @@ public class PersonUpdate extends StatusBarUtil implements TextWatcher,View.OnCl
 
         it = getIntent();
         Bundle bd = it.getExtras();
-        content = bd.getString("STR");
-        value = bd.getString("VALUE");
+        content = bd.getString("STR","");
+        value = bd.getString("VALUE","");
         person_txt_update.setText(content);
         person_txt_update.setSelection(content.length());
 

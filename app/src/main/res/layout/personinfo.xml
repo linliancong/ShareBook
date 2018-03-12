@@ -71,7 +71,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/person_ly_xm"
+        android:id="@+id/person_ly_zh"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
         android:paddingRight="15dp"
@@ -82,18 +82,18 @@
         android:focusable="true"
         >
         <TextView
-            android:id="@+id/person_txt_xm"
+            android:id="@+id/person_txt_zh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:text="姓名"
+            android:text="账号"
             android:textSize="16sp"
             android:textColor="@color/black"
             />
 
         <com.develop.util.ImgTxtLayout
-            android:id="@+id/person_imgtxt_xm"
+            android:id="@+id/person_imgtxt_zh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -113,7 +113,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/person_ly_zh"
+        android:id="@+id/person_ly_xm"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
         android:paddingRight="15dp"
@@ -123,18 +123,18 @@
         android:focusable="true"
         >
         <TextView
-            android:id="@+id/person_txt_zh"
+            android:id="@+id/person_txt_xm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:text="账号"
+            android:text="姓名"
             android:textSize="16sp"
             android:textColor="@color/black"
             />
 
         <com.develop.util.ImgTxtLayout
-            android:id="@+id/person_imgtxt_zh"
+            android:id="@+id/person_imgtxt_xm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -260,6 +260,8 @@
             android:layout_centerInParent="true"
             develop:iconDrawable="@mipmap/cs_arrow_right"
             develop:spacing="4dp"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
             develop:style="iconRight"
             />
 
@@ -405,6 +407,43 @@
             android:layout_centerInParent="true"
             android:src="@drawable/anima_sche"
             />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_ly_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/person_txt_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="修改密码"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:spacing="4dp"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
+            develop:style="iconRight"
+            />
+
     </RelativeLayout>
 
 </LinearLayout>

@@ -1,20 +1,46 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/person"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    >
 
     <ImageView
         android:id="@+id/left_img"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@mipmap/ic_launcher_round" />
+        android:layout_margin="20dp"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        />
 
-    <TextView
-        android:id="@+id/left_name"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Test" />
-</LinearLayout>
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/left_img"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/left_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test"
+            android:textSize="20sp"
+            android:textColor="@color/black_text"
+            />
+
+        <TextView
+            android:id="@+id/left_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Test"
+            android:textSize="12sp"
+            android:textColor="@color/black_overlay"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

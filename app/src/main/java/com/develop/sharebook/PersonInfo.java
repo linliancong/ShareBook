@@ -18,9 +18,11 @@ import android.net.Uri;
 import android.os.*;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -70,6 +72,7 @@ public class PersonInfo extends Fragment implements View.OnClickListener{
     private RelativeLayout sj;
     private RelativeLayout qq;
     private RelativeLayout dz;
+    private RelativeLayout pwd;
 
     private ImageView img;
     private TextView tx_t;
@@ -84,12 +87,28 @@ public class PersonInfo extends Fragment implements View.OnClickListener{
     private ImgTxtLayout qq_i;
     private ImgTxtLayout dz_i;
 
+    //弹窗所需的控件
+    private AlertDialog alert;
+    private AlertDialog.Builder builder;
+    private LayoutInflater inflater;
+
+    private ShowAct showAct;
+    private int tag=0;
+
     Handler handler=new Handler(){
         @Override
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case 0x001:
                     getUserInfo();
+                    sp.setIsUpdate(true);
+                    break;
+                case 0x002:
+                    sp.setIsUpdate(true);
+                    break;
+                case 0x003:
+                    showAct = (ShowAct) getActivity();
+                    showAct.callBack(0x003);
                     break;
             }
         }
@@ -151,6 +170,7 @@ public class PersonInfo extends Fragment implements View.OnClickListener{
         sj=view.findViewById(R.id.person_ly_sj);
         qq=view.findViewById(R.id.person_ly_qq);
         dz=view.findViewById(R.id.person_ly_dz);
+        pwd=view.findViewById(R.id.person_ly_pwd);
 
         img=view.findViewById(R.id.person_img_tx);
         tx_t=view.findViewById(R.id.person_txt_tx);
@@ -167,13 +187,14 @@ public class PersonInfo extends Fragment implements View.OnClickListener{
 
         tx.setOnClickListener(this);
 		xm.setOnClickListener(this);
-		zh.setOnClickListener(this);
+		//zh.setOnClickListener(this);
 		yx.setOnClickListener(this);
 		gxqm.setOnClickListener(this);
 		sfz.setOnClickListener(this);
 		sj.setOnClickListener(this);
 		qq.setOnClickListener(this);
 		dz.setOnClickListener(this);
+		pwd.setOnClickListener(this);
 
     }
 
@@ -192,6 +213,7 @@ public class PersonInfo extends Fragment implements View.OnClickListener{
         {
             if (data!=null) {
                 setImageToHeadView(data);
+                handler.sendEmptyMessage(0x002);
             }
         }
     }
@@ -388,6 +410,43 @@ public class PersonInfo extends Fragment implements View.OnClickListener{
                 it_dz.putExtras(bd_dz);
                 startActivity(it_dz);
                 break;
+            case R.id.person_ly_pwd:
+                View ad_view2= getAlert(R.layout.ad_input_pass);
+                final EditText editText= (EditText) ad_view2.findViewById(R.id.ad_edit_pass);
+                ad_view2.findViewById(R.id.ad_btn_pass_cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //handler.sendEmptyMessage(0x0001);
+                        alert.dismiss();
+                    }
+                });
+                ad_view2.findViewById(R.id.ad_btn_pass_confirm).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //handler.sendEmptyMessage(0x0002);
+                        SharedPreferenceUtils sp=new SharedPreferenceUtils(context);
+                        if(sp.getPWD().equals(editText.getText().toString())){
+                            handler.sendEmptyMessage(0x003);
+                            alert.dismiss();
+                        }
+                        else {
+                            alert.dismiss();
+                            View view=getAlert(R.layout.ad_pass_erro);
+                            TextView txt= (TextView) view.findViewById(R.id.ad_txt_erro2);
+                            //String name=editText.getText().toString();
+                            if(editText.getText().toString().equals("")){
+                                txt.setText("原密码不能为空。");
+                            }
+                            view.findViewById(R.id.ad_btn_erro_confirm).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    alert.dismiss();
+                                }
+                            });
+                        }
+                    }
+                });
+                break;
         }
     }
 
@@ -407,6 +466,9 @@ public class PersonInfo extends Fragment implements View.OnClickListener{
             sj_i.setText(map.get("phone"));
             qq_i.setText(map.get("QQ"));
             dz_i.setText(map.get("address"));
+
+            sp.setName(map.get("name"));
+            sp.setRemark(map.get("remark"));
         }
     }
 
@@ -428,5 +490,25 @@ public class PersonInfo extends Fragment implements View.OnClickListener{
         if(broad!=null){
             getActivity().unregisterReceiver(broad);
         }
+    }
+
+    //定义接口
+    public interface ShowAct{
+        public void callBack(int result);
+    }
+
+    //定义弹窗方法
+    public View getAlert(int mLayout){
+        View ad_view;
+        //初始化Builder
+        builder=new AlertDialog.Builder(context);
+        //完成相关设置
+        inflater=getActivity().getLayoutInflater();
+        ad_view=inflater.inflate(mLayout,null,false);
+        builder.setView(ad_view);
+        builder.setCancelable(true);
+        alert=builder.create();
+        alert.show();
+        return ad_view;
     }
 }

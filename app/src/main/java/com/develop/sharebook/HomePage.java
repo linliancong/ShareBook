@@ -11,8 +11,8 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
+import android.os.*;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -23,14 +23,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.develop.util.AppManager;
 import com.develop.util.MyFragmentPagerAdapter;
+import com.develop.util.MyViewPager;
 import com.develop.util.SharedPreferenceUtils;
 import com.develop.util.StatusBarUtil;
 import com.nineoldandroids.view.ViewHelper;
@@ -43,7 +47,8 @@ import java.util.zip.Inflater;
  * Created by Administrator on 2018/3/8.
  */
 
-public class HomePage extends StatusBarUtil implements NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener,View.OnClickListener{
+public class HomePage extends StatusBarUtil implements NavigationView.OnNavigationItemSelectedListener,
+        ViewPager.OnPageChangeListener,View.OnClickListener,PersonInfo.ShowAct{
 
     public static final int PAG_ONE=0;
     public static final int PAG_TWO=1;
@@ -58,22 +63,39 @@ public class HomePage extends StatusBarUtil implements NavigationView.OnNavigati
     private ActionBarDrawerToggle toggle;
 
     private TextView user;
+    private TextView remark;
     private ImageView img;
-    private LinearLayout person;
+    private RelativeLayout person;
 
     private Context context;
     private double mTime=0;
     private SharedPreferenceUtils sp;
 
 
-    private ViewPager vpager;
+    private MyViewPager vpager;
     private TextView title;
     private ImageView scan;
     private MyFragmentPagerAdapter mAdapter=null;
 
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0x001:
+                    user.setText(sp.getName());
+                    remark.setText(sp.getRemark());
+                    readImage();
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //页面管理
+        AppManager.getAppManager().addActivity(HomePage.this);
 
         init();
 
@@ -115,6 +137,7 @@ public class HomePage extends StatusBarUtil implements NavigationView.OnNavigati
         //获取NavigationView 的headerLayout
         View inflater=navigationView.inflateHeaderView(R.layout.hp_left);
         user = inflater.findViewById(R.id.left_name);
+        remark = inflater.findViewById(R.id.left_remark);
         img = inflater.findViewById(R.id.left_img);
         person=inflater.findViewById(R.id.person);
 
@@ -122,14 +145,8 @@ public class HomePage extends StatusBarUtil implements NavigationView.OnNavigati
         if(!sp.getIsVisitor()) {
             //设置头像和名字
             user.setText(sp.getName());
-            /*img.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("image*//*");
-                    startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
-                }
-            });*/
+            remark.setText(sp.getRemark());
+
             person.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -144,6 +161,20 @@ public class HomePage extends StatusBarUtil implements NavigationView.OnNavigati
         }else {
             user.setText("游客~");
         }
+
+        //检查是否更新了头像、姓名、个性签名
+        new Thread(){
+            @Override
+            public void run() {
+                while (true)
+                {
+                    if(sp.getIsUpdate()) {
+                        sp.setIsUpdate(false);
+                        handler.sendEmptyMessage(0x001);
+                    }
+                }
+            }
+        }.start();
     }
 
 
@@ -276,6 +307,16 @@ public class HomePage extends StatusBarUtil implements NavigationView.OnNavigati
             case R.id.hp_scan:
                 //这里是扫码之后的操作
                 Toast.makeText(getApplicationContext(),"扫一扫",Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    @Override
+    public void callBack(int result) {
+        switch (result){
+            case 0x003:
+                Intent it1=new Intent(context,PersonPWD.class);
+                startActivity(it1);
                 break;
         }
     }

@@ -46,6 +46,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".PersonPWD">
+            <intent-filter>
+                <action android:name="android.intent.action.PERSONPWD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
 
 

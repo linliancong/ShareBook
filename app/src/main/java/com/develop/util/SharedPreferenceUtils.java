@@ -67,6 +67,17 @@ public class SharedPreferenceUtils {
         return sp.getString("PWD","");
     }
 
+    //个性签名
+    public void setRemark(String remark){
+        editor.putString("remark",remark);
+        editor.commit();
+    }
+
+    public String getRemark()
+    {
+        return sp.getString("remark","");
+    }
+
     /**
     *
     * 2、登录信息
@@ -101,6 +112,16 @@ public class SharedPreferenceUtils {
 
     public boolean getIsVisitor() {
         return sp.getBoolean("isVisitor", true);
+    }
+
+    // 是否更新用户资料
+    public void setIsUpdate(boolean isUpdate) {
+        editor.putBoolean("isUpdate", isUpdate);
+        editor.commit();
+    }
+
+    public boolean getIsUpdate() {
+        return sp.getBoolean("isUpdate", false);
     }
 
     // 是否第一次检查更新

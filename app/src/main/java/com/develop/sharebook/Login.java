@@ -106,6 +106,7 @@ public class Login extends StatusBarUtil implements View.OnClickListener,TextWat
                             sp.setUserName(map.get("userName"));
                             sp.setPWD(map.get("passwd"));
                             sp.setName(map.get("name"));
+                            sp.setRemark(map.get("remark"));
                             //设置登录标记
                             sp.setIsVisitor(false);
                             Intent it1 = new Intent(context, HomePage.class);
