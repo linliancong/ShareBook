@@ -48,29 +48,33 @@ public class DBOpenHelper extends SQLiteOpenHelper {
          * 表名：bookInfo（图书信息表）
          * 以下为各个字段
          * id：图书编号
-         * library：书库
+         * ISBN: ISBN
+         * libraryID：书库编号
          * bookName：图书名
-         * category：类别
+         * author：作者
+         * tag：类别
          * CLC：中图法
          * queryName：索书名
-         * pic：图片
+         * imgPath：图片路径
          * price：价格
          * num：图书数量
-         * intro：简介
+         * summary：简介
          * remark：备注
          * */
         db.execSQL("create table if not exists bookInfo"+
                 "(id integer primary key autoincrement,"+
-                "library varchar(50),"+
+                "ISBN varchar(50),"+
+                "libraryID integer,"+
                 "bookName varchar(50),"+
-                "category varchar(50),"+
+                "author varchar(50),"+
+                "tag varchar(100),"+
                 "CLC varchar(50),"+
                 "queryName varchar(50),"+
-                "pic varchar(50),"+
+                "imgPath varchar(100),"+
                 "price varchar(50),"+
                 "num varchar(50),"+
-                "intro varchar(50),"+
-                "remark varchar(50))");
+                "summary varchar(1000),"+
+                "remark varchar(500))");
 
         /**
          * 表名：bookBorrow（图书借阅信息）
@@ -86,8 +90,22 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 "(id integer primary key autoincrement,"+
                 "bookID integer,"+
                 "userID integer,"+
-                "state varchar(50),"+
+                "state integer,"+
                 "date varchar(50),"+
+                "remark varchar(50))");
+
+        /**
+         * 表名：library（书库表）
+         * 以下为各个字段
+         * id：书库编号
+         * userID：用户编号
+         * name：书库名
+         * remark：备注
+         * */
+        db.execSQL("create table if not exists library"+
+                "(id integer primary key autoincrement,"+
+                "userID integer,"+
+                "name varchar(50),"+
                 "remark varchar(50))");
 
     }

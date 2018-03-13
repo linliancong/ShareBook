@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:develop="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black_bg"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@color/bg_white"
+        android:clickable="true"
+        android:focusable="true"
+        >
+
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/liabary_imgtxt_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:paddingLeft="15dp"
+            develop:iconDrawable="@mipmap/back_blue"
+            develop:iconDrawablePress="@mipmap/back_blue_press"
+            develop:spacing="10dp"
+            develop:style="iconLeft"
+            develop:text="查看书库"
+            develop:textSize="18"
+            develop:textColor="@color/black"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/div_white"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/library_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:scrollbars="none"
+        android:background="@color/bg_white"
+        android:listSelector="#00000000"
+        android:stackFromBottom="false"
+        android:transcriptMode="alwaysScroll"
+        android:visibility="visible"
+        ></ListView>
+
+</LinearLayout>

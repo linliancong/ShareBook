@@ -49,6 +49,7 @@ public class Login extends StatusBarUtil implements View.OnClickListener,TextWat
         //如果程序是第一次运行则初始化数据
         if(sp.getIsFirst()) {
             op.insert("insert into user(username,passwd,name,email) values(?,?,?,?)", new String[]{"test", "1234", "test", "1070335034@qq.com"});
+
         }else {
             if(sp.getUserName().length()>0){
                 user.setText(sp.getUserName());

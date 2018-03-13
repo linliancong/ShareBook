@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+        <TextView
+            android:id="@+id/library_item_1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="书库名:"
+            android:textColor="@color/black_text"
+            android:gravity="right"
+            />
+        <TextView
+            android:id="@+id/library_item_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="我的图书"
+            android:textSize="14sp"
+            android:layout_below="@+id/library_item_1"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+        <TextView
+            android:id="@+id/library_item_2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="藏书量:"
+            android:textColor="@color/black_text"
+            android:gravity="right"
+            />
+        <TextView
+            android:id="@+id/library_item_count"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="10(本)"
+            android:textSize="14sp"
+            android:layout_below="@+id/library_item_1"
+            />
+    </LinearLayout>
+
+</LinearLayout>

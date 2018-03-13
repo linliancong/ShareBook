@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">ShareBook</string>
+
+    <string name="error">Error</string>
+    <string name="something_wrong">Something wrong…</string>
+    <string name="unable_to_open_camera">Unable to open camera, please check it and try again later.</string>
+    <string name="scan_code">Scan code</string>
+
+    <string name="notifyTitle">提示</string>
+    <string name="notifyMsg">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。</string>
+    <string name="setting">设置</string>
+    <string name="cancel">取消</string>
 </resources>

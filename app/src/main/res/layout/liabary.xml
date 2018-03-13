@@ -1,5 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:develop="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black_bg"
+    >
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="我的书库"
+        android:textColor="@color/blue_500"
+        />
+    <RelativeLayout
+        android:id="@+id/library_ly_show"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/person_txt_zh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="查看书库"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_zh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:style="iconRight"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="加入新书库"
+        android:textColor="@color/blue_500"
+        />
+
+    <RelativeLayout
+        android:id="@+id/library_ly_new"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/person_txt_xm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="新建书库"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/person_imgtxt_xm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:style="iconRight"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

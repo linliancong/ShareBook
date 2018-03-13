@@ -37,11 +37,12 @@ public class SqlOperator {
         Cursor cursor = db.rawQuery(sql,strs);
         //所有数据集合
         List<Map<String,String>> datas=new ArrayList<>();
-        //一条数据的集合
-        Map<String, String> data = new HashMap<>();
+
         //开始遍历数据
         while(cursor.moveToNext())
         {
+            //一条数据的集合
+            Map<String, String> data = new HashMap<>();
             for (int i=0;i<cursor.getColumnCount();i++){
                 String coulumnName=cursor.getColumnName(i);
                 String value=cursor.getString(cursor.getColumnIndex(coulumnName));
