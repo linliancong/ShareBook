@@ -67,6 +67,7 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
     private String summary=null;
     private String imgPath=null;
     private List<String> aLib=new ArrayList<>();
+    private String publisher;
 
     private static final int REQUEST_CODE_PICK_IMAGE=1;
     private static final int REQUEST_CODE_CAPTURE_CAMEIA=2;
@@ -201,6 +202,7 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
             author.setText(book.get(0).getAuthor());
             ISBN.setText(book.get(0).getIsbn13());
             price.setText(book.get(0).getPrice());
+            publisher=book.get(0).getPublisher();
             summary =book.get(0).getSummary();
             imgPath=book.get(0).getImagePath();
             if(imgPath!=null){
@@ -318,18 +320,29 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
     private void update() {
         List<Map<String, String>> data = new ArrayList<>();
         Map<String, String> map = new HashMap<>();
-        op.insert("insert into bookInfo(ISBN,libraryID,bookName,author,tag,imgPath,price,summary,remark) values(?,?,?,?,?,?,?,?,?)",
-                new String[]{ISBN.getText().toString(),libs,name.getText().toString(),author.getText().toString(),tags,imgPath,price.getText().toString(),summary,remark.getText().toString()});
-        //判断是否插入成功
-        data = op.select("select count(1) num from bookInfo where ISBN=?", new String[]{ISBN.getText().toString()});
-        if (data.size() != 0) {
-            map = data.get(0);
-            if (map.get("num").toString().equals("1")) {
-                Toast.makeText(context,"保存成功",Toast.LENGTH_SHORT).show();
-                finish();
-            }else {
-                Toast.makeText(context,"保存失败",Toast.LENGTH_SHORT).show();
+        //判断图书是否存在，不存在：插入
+        data = op.select("select * from bookInfo where ISBN=?", new String[]{ISBN.getText().toString()});
+        if (data.size() == 0) {
+            if (libs != null) {
+                op.insert("insert into bookInfo(ISBN,libraryID,bookName,author,publisher,tag,imgPath,price,summary,remark) values(?,?,?,?,?,?,?,?,?,?)",
+                        new String[]{ISBN.getText().toString(), libs, name.getText().toString(), author.getText().toString(), publisher, tags, imgPath, price.getText().toString(), summary, remark.getText().toString()});
+                //判断是否插入成功
+                data = op.select("select count(1) num from bookInfo where ISBN=?", new String[]{ISBN.getText().toString()});
+                if (data.size() != 0) {
+                    map = data.get(0);
+                    if (map.get("num").toString().equals("1")) {
+                        Toast.makeText(context, "保存成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(context, "保存失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } else {
+                Toast.makeText(context, "书库不存在，请先创建书库", Toast.LENGTH_SHORT).show();
             }
+        }else
+        {
+            Toast.makeText(context, "该图书已存在", Toast.LENGTH_SHORT).show();
         }
     }
 

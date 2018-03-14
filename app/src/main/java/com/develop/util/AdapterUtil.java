@@ -1,6 +1,7 @@
 package com.develop.util;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -146,6 +147,19 @@ public abstract class AdapterUtil<T> extends BaseAdapter {
             else
             {
                 view.setBackgroundResource(drwableRes);
+            }
+            return this;
+        }
+
+        /**
+         * 设置图片(Bitmap)
+         */
+        public ViewHolder setImageBitmap(int id,Bitmap drwableRes)
+        {
+            View view=getView(id);
+            if(view instanceof ImageView)
+            {
+                ((ImageView) view).setImageBitmap(drwableRes);
             }
             return this;
         }

@@ -52,6 +52,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
          * libraryID：书库编号
          * bookName：图书名
          * author：作者
+         * publisher：出版社
          * tag：类别
          * CLC：中图法
          * queryName：索书名
@@ -67,6 +68,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 "libraryID integer,"+
                 "bookName varchar(50),"+
                 "author varchar(50),"+
+                "publisher varchar(50),"+
                 "tag varchar(100),"+
                 "CLC varchar(50),"+
                 "queryName varchar(50),"+
@@ -80,7 +82,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
          * 表名：bookBorrow（图书借阅信息）
          * 以下为各个字段
          * id：借阅编号
-         * bookID：图书编号
+         * ISBN：ISBN
          * userID：用户编号
          * state：借阅状态（1、预约中，2、借阅中）
          * date：借阅时间
@@ -88,10 +90,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
          * */
         db.execSQL("create table if not exists bookBorrow"+
                 "(id integer primary key autoincrement,"+
-                "bookID integer,"+
+                "ISBN varchar(50),"+
                 "userID integer,"+
                 "state integer,"+
-                "date varchar(50),"+
+                "date datetime,"+
                 "remark varchar(50))");
 
         /**

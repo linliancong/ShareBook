@@ -11,6 +11,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -61,27 +63,11 @@ public class Dynamic extends Fragment{
                 case 0x001:
                     break;
                 case 0x002:
-                    //扫描插入数据
-                    /*Intent it=new Intent(context,BookInfoView.class);
-                    Bundle bd=new Bundle();
-                    ArrayList<BookInfo> book1=new ArrayList<>();
-                    book1.add(book);
-                    bd.putSerializable("book",book1);
-                    it.putExtras(bd);
-                    startActivity(it);*/
                     setAdapter();
-                    Toast.makeText(context,"获取推荐数据成功",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context,"获取推荐数据成功",Toast.LENGTH_SHORT).show();
                     break;
                 case 0x003:
-                    //手动插入数据
-                    /*Intent it2=new Intent(context,BookInfoView.class);
-                    Bundle bd2=new Bundle();
-                    ArrayList<BookInfo> book2=new ArrayList<>();
-                    book2.add(book);
-                    bd2.putSerializable("book",book2);
-                    it2.putExtras(bd2);
-                    startActivity(it2);*/
-                    Toast.makeText(context,"获取推荐数据失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"没有新动态",Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -98,6 +84,7 @@ public class Dynamic extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.dynamic, container, false);
+            list=view.findViewById(R.id.dynamic_list);
             sp=new SharedPreferenceUtils(context);
             op=new SqlOperator(context);
             new Thread(new Runnable() {
@@ -117,15 +104,47 @@ public class Dynamic extends Fragment{
     }
 
     private void setAdapter() {
-        adapter=new AdapterUtil<BookInfo>(books, R.layout.liabary_show_item){
+        adapter=new AdapterUtil<BookInfo>(books, R.layout.dynamic_item){
             @Override
             public void bindView(ViewHolder holder, BookInfo obj) {
-                /*holder.setText(R.id.library_item_name,obj.getName());
-                holder.setText(R.id.library_item_count,obj.getCount());*/
+                holder.setImageBitmap(R.id.dynamic_img,readImage(obj.getImagePath()));
+                holder.setText(R.id.dynamic_name,obj.getTitle());
+                holder.setText(R.id.dynamic_author,obj.getAuthor());
+                holder.setText(R.id.dynamic_summary,obj.getSummary());
             }
         };
 
         list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent it=new Intent(context,DynamicInfo.class);
+                Bundle bd=new Bundle();
+                BookInfo book1=books.get(position);
+                ArrayList<BookInfo> bookInfos=new ArrayList<>();
+                bookInfos.add(book1);
+                bd.putSerializable("book",bookInfos);
+                it.putExtras(bd);
+                startActivity(it);
+            }
+
+        });
+    }
+
+    /**
+     * 读取图片
+     * */
+    private Bitmap readImage(String path) {
+        File file = new File(path);
+        if(file.exists()){
+            //存储--->内存
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+
+            //img.setImageBitmap(bitmap);
+            return bitmap;
+        }
+        return null;
     }
 
     // 通过豆瓣获取图书信息
@@ -180,19 +199,19 @@ public class Dynamic extends Fragment{
         public  ArrayList<BookInfo> readBookInfo(String jsonStr) {
             JSONObject jsonObject;
             ArrayList<BookInfo> bookInfos=new ArrayList<>();
-            BookInfo bookInfo = new BookInfo();
 
             try {
                 JSONObject jsonObject1 = new JSONObject(jsonStr);
                 JSONArray jsonArray=jsonObject1.getJSONArray("books");
                 for (int i=0;i<jsonArray.length();i++) {
                     jsonObject=jsonArray.getJSONObject(i);
+                    BookInfo bookInfo = new BookInfo();
                     bookInfo.setTitle(jsonObject.getString("title"));
                     bookInfo.setAuthor(parseJSONArraytoString(jsonObject.getJSONArray("author")));
                     bookInfo.setTags(parseJSONArraytoString2(jsonObject.getJSONArray("tags")));
                     bookInfo.setPublisher(jsonObject.getString("publisher"));
 
-                    DownloadBitmap(jsonObject.getString("image"));
+                    //bookInfo.setImage(DownloadBitmap(jsonObject.getString("image")));
                     saveImage(DownloadBitmap(jsonObject.getString("image")), jsonObject.getString("isbn13"));
                     bookInfo.setImagePath(file.toString());
 

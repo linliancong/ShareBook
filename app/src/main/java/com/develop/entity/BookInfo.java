@@ -1,5 +1,11 @@
 package com.develop.entity;
 
+import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.develop.util.ImgTxtLayout;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -33,6 +39,11 @@ public class BookInfo implements Serializable{
 
     private String imagePath;
 
+    //private Bitmap image;
+
+
+    public BookInfo(){}
+
     /**
      * @return the imagePath
      */
@@ -48,8 +59,6 @@ public class BookInfo implements Serializable{
         this.imagePath = imagePath;
     }
 
-    public BookInfo() {
-    }
 
     /**
      * @return the tags
@@ -215,5 +224,20 @@ public class BookInfo implements Serializable{
     public void setSummary(String summary) {
         this.summary = summary;
     }
+
+    /**
+     * @return the image
+     */
+    /*public Bitmap getImage() {
+        return image;
+    }*/
+
+    /**
+     * @param image
+     *            the image to set
+     */
+    /*public void setImage(Bitmap image) {
+        this.image = image;
+    }*/
 
 }

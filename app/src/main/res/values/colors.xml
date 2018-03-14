@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorAccent2">#62b900</color>
-    <color name="black_overlay">#66000000</color>
+    <color name="black_overlay">#CC000000</color>
     <color name="black_pressed">#1C000000</color>
     <color name="black_bg">#10000000</color>
     <color name="black_line">#19000000</color>

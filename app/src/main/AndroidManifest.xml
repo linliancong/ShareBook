@@ -53,7 +53,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name="com.develop.zxing.CaptureActivity">
             <intent-filter>
                 <action android:name="android.intent.action.CAPTURE" />
@@ -61,7 +60,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name=".BookInfoView">
             <intent-filter>
                 <action android:name="android.intent.action.BOOKINFO" />
@@ -69,10 +67,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name=".LiabaryShow">
             <intent-filter>
                 <action android:name="android.intent.action.LIABARYSHOW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".DynamicInfo">
+            <intent-filter>
+                <action android:name="android.intent.action.DYNAMICINFO" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

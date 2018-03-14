@@ -101,7 +101,7 @@ public class Login extends StatusBarUtil implements View.OnClickListener,TextWat
                         map = data.get(0);
                         if (map.get("userName").toString().equals(user.getText().toString())) {
                             //验证成功
-                            Toast.makeText(context, "验证成功！", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "验证成功！", Toast.LENGTH_SHORT).show();
                             sp.setIsFirst(false);
                             sp.setID(map.get("id"));
                             sp.setUserName(map.get("userName"));
