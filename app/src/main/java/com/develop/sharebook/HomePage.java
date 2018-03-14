@@ -264,24 +264,34 @@ public class HomePage extends CheckPermissionsActivity implements NavigationView
                 break;
             case R.id.message:
                 //消息~
+                if(!sp.getIsVisitor()) {
                 /*Intent it2=new Intent(context,Login.class);
                 startActivity(it2);*/
-                vpager.setCurrentItem(PAG_THREE);
-                title.setText("消息");
+                    vpager.setCurrentItem(PAG_THREE);
+                    title.setText("消息");
+                }else {
+                    Toast.makeText(getApplicationContext(),"你还没注册，请先注册",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.library:
                 //书库~
+                if(!sp.getIsVisitor()) {
                 /*Intent it3=new Intent(context,Login.class);
                 startActivity(it3);*/
-                vpager.setCurrentItem(PAG_FOUR);
-                title.setText("书库");
+                    vpager.setCurrentItem(PAG_FOUR);
+                    title.setText("书库");
+                }
                 break;
             case R.id.stat:
                 //图书统计~
+                if(!sp.getIsVisitor()) {
                 /*Intent it4=new Intent(context,Login.class);
                 startActivity(it4);*/
-                vpager.setCurrentItem(PAG_FIVE);
-                title.setText("图书统计");
+                    vpager.setCurrentItem(PAG_FIVE);
+                    title.setText("图书统计");
+                }else {
+                    Toast.makeText(getApplicationContext(), "你还没注册，请先注册", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.about:
                 //关于我们~
