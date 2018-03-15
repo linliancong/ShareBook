@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.develop.util.AppManager;
 import com.develop.util.SharedPreferenceUtils;
 import com.develop.util.StatusBarUtil;
 import com.develop.util.database.SqlOperator;
@@ -43,6 +44,7 @@ public class Login extends StatusBarUtil implements View.OnClickListener,TextWat
 
         //初始化控件
         init();
+
 
         String name=sp.getUserName();
 
@@ -137,13 +139,13 @@ public class Login extends StatusBarUtil implements View.OnClickListener,TextWat
             case R.id.signin:
                 Intent it3=new Intent(context,Register.class);
                 startActivity(it3);
-                finish();
+                //finish();
                 break;
             //找回密码
             case R.id.losepwd:
                 Intent it4=new Intent(context,FindPWD.class);
                 startActivity(it4);
-                finish();
+                //finish();
                 break;
         }
 

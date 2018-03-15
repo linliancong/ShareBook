@@ -27,7 +27,7 @@ public class CameraManager {
 	/**
 	 * Preview frames are delivered here, which we pass on to the registered
 	 * handler. Make sure to clear the handler so it will only receive one
-	 * message.
+	 * message1.
 	 */
 	private final PreviewCallback previewCallback;
 
@@ -140,13 +140,13 @@ public class CameraManager {
 
 	/**
 	 * A single preview frame will be returned to the handler supplied. The data
-	 * will arrive as byte[] in the message.obj field, with width and height
-	 * encoded as message.arg1 and message.arg2, respectively.
+	 * will arrive as byte[] in the message1.obj field, with width and height
+	 * encoded as message1.arg1 and message1.arg2, respectively.
 	 * 
 	 * @param handler
-	 *            The handler to send the message to.
+	 *            The handler to send the message1 to.
 	 * @param message
-	 *            The what field of the message to be sent.
+	 *            The what field of the message1 to be sent.
 	 */
 	public synchronized void requestPreviewFrame(Handler handler, int message) {
 		Camera theCamera = camera;

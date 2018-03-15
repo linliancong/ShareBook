@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.develop.entity.LiabaryInfo;
 import com.develop.util.AdapterUtil;
@@ -33,6 +34,7 @@ public class LiabaryShow extends StatusBarUtil {
     private SharedPreferenceUtils sp;
     private SqlOperator op;
     private Context context;
+    private TextView info;
 
     @Override
     protected int getLayoutResId() {
@@ -52,6 +54,7 @@ public class LiabaryShow extends StatusBarUtil {
 
         back=findViewById(R.id.liabary_imgtxt_back);
         list=findViewById(R.id.library_list);
+        info=findViewById(R.id.library_info);
         sp=new SharedPreferenceUtils(context);
         op=new SqlOperator(context);
 
@@ -81,7 +84,13 @@ public class LiabaryShow extends StatusBarUtil {
                 LiabaryInfo liabaryInfo=new LiabaryInfo(data.get(i).get("name"),data2.get(0).get("num"));
 
                 lib.add(liabaryInfo);
+                list.setVisibility(View.VISIBLE);
+                info.setVisibility(View.GONE);
             }
+        }else
+        {
+            list.setVisibility(View.GONE);
+            info.setVisibility(View.VISIBLE);
         }
     }
 

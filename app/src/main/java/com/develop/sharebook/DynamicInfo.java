@@ -23,7 +23,9 @@ import org.w3c.dom.Text;
 
 import java.io.File;
 import java.security.PrivateKey;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +68,6 @@ public class DynamicInfo extends StatusBarUtil implements View.OnClickListener {
 
         getData();
 
-
     }
 
     private void init() {
@@ -88,6 +89,7 @@ public class DynamicInfo extends StatusBarUtil implements View.OnClickListener {
         save=findViewById(R.id.dynamic_info_save);
         sub=findViewById(R.id.dynamic_info_sub);
 
+        visible.setOnClickListener(this);
         more.setOnClickListener(this);
         save.setOnClickListener(this);
         sub.setOnClickListener(this);
@@ -96,6 +98,7 @@ public class DynamicInfo extends StatusBarUtil implements View.OnClickListener {
         back.setOnClickListener(new ImgTxtLayout.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendBroadcast(new Intent("com.develop.sharebook.MYBROADCAST2"));
                 finish();
             }
         });
@@ -161,27 +164,38 @@ public class DynamicInfo extends StatusBarUtil implements View.OnClickListener {
                 break;
             case R.id.dynamic_info_save:
                 visible.setVisibility(View.GONE);
-                Intent it=new Intent(context,BookInfoView.class);
-                Bundle bd=new Bundle();
-                bd.putSerializable("book",book);
-                it.putExtras(bd);
-                startActivity(it);
+                if(!sp.getIsVisitor()) {
+                    Intent it = new Intent(context, BookInfoView.class);
+                    Bundle bd = new Bundle();
+                    bd.putSerializable("book", book);
+                    bd.putInt("tag", 1);
+                    it.putExtras(bd);
+                    startActivity(it);
+                }else {
+                    Toast.makeText(getApplicationContext(),"你还没注册，请先注册",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.dynamic_info_sub:
                 visible.setVisibility(View.GONE);
-                if(state==0) {
-                    //获取书库信息
-                    List<Map<String, String>> data = new ArrayList<>();
-                    data = op.select("select * from library where userID=?", new String[]{sp.getID()});
-                    if (data.size() != 0) {
-                        libs = data.get(0).get("id");
-                        update();
+                if(!sp.getIsVisitor()) {
+                    if (state == 0) {
+                        //获取书库信息
+                        List<Map<String, String>> data = new ArrayList<>();
+                        data = op.select("select * from library where userID=?", new String[]{sp.getID()});
+                        if (data.size() != 0) {
+                            libs = data.get(0).get("id");
+                            update();
+                        } else {
+                            Toast.makeText(context, "书库不存在，请先创建书库", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(context, "书库不存在，请先创建书库", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "图书已经预约，无需重复操作", Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                    Toast.makeText(context, "图书已经预约，无需重复操作", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"你还没注册，请先注册",Toast.LENGTH_SHORT).show();
                 }
+            case R.id.dynamic_info_ly_more:
+                visible.setVisibility(View.GONE);
                 break;
         }
     }
@@ -192,6 +206,10 @@ public class DynamicInfo extends StatusBarUtil implements View.OnClickListener {
     private void update() {
         List<Map<String, String>> data = new ArrayList<>();
         Map<String, String> map = new HashMap<>();
+
+        Date newTime=new Date();
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String date=sdf.format(newTime);
         int tag=1;
         //判断图书是否存在，不存在：插入
         data = op.select("select * from bookInfo where ISBN=?", new String[]{book.get(0).getIsbn13()});
@@ -204,26 +222,36 @@ public class DynamicInfo extends StatusBarUtil implements View.OnClickListener {
             if (data.size() != 0) {
                 map = data.get(0);
                 if (map.get("num").toString().equals("1")) {
+                    op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
+                            new String[]{sp.getID(), "保存书本","您已经成功保存了《"+book.get(0).getTitle()+"》。", "1",date});
                     tag=1;
                 } else {
+                    op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
+                            new String[]{sp.getID(), "保存书本","您对于《"+book.get(0).getTitle()+"》保存失败！", "1",date});
                     tag=0;
                 }
             }
         }
 
         if(tag==1) {
-            op.insert("insert into bookBorrow(userID,ISBN,state) values(?,?,?)", new String[]{sp.getID(), book.get(0).getIsbn13(), "1"});
+            op.insert("insert into bookBorrow(userID,ISBN,state,date) values(?,?,?,?)", new String[]{sp.getID(), book.get(0).getIsbn13(), "1",date});
             data = op.select("select count(1) num from bookBorrow where ISBN=?", new String[]{book.get(0).getIsbn13()});
             if (data.size() != 0) {
                 map = data.get(0);
                 if (map.get("num").toString().equals("1")) {
+                    op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
+                            new String[]{sp.getID(), "预约书本","您已经成功预约了《"+book.get(0).getTitle()+"》。", "1",date});
                     Toast.makeText(context, "预约成功", Toast.LENGTH_SHORT).show();
                     info_state.setVisibility(View.VISIBLE);
                 }
             } else {
+                op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
+                        new String[]{sp.getID(), "预约书本","您预约的《"+book.get(0).getTitle()+"》，预约失败！", "1",date});
                 Toast.makeText(context, "预约失败，请稍后重试", Toast.LENGTH_SHORT).show();
             }
         }else {
+            op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
+                    new String[]{sp.getID(), "预约书本","您预约的《"+book.get(0).getTitle()+"》预约失败！该书本不存在。", "1",date});
             Toast.makeText(context, "预约失败，请稍后重试", Toast.LENGTH_SHORT).show();
         }
     }

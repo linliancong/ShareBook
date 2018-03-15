@@ -58,7 +58,7 @@ public class PersonUpdate extends StatusBarUtil implements TextWatcher,View.OnCl
             switch (msg.what){
                 case 0x001:
                     Toast.makeText(context,"修改成功",Toast.LENGTH_SHORT).show();
-                    sendBroadcast(new Intent("com.zxhl.gpsking.MYBROADCAST"));
+                    sendBroadcast(new Intent("com.develop.sharebook.MYBROADCAST"));
                     break;
                 case 0x002:
                     Toast.makeText(context,"修改失败",Toast.LENGTH_SHORT).show();

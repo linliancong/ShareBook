@@ -134,7 +134,7 @@ public class PersonInfo extends Fragment implements View.OnClickListener{
             //广播更新
             broad=new MyBroadcast();
             IntentFilter filter=new IntentFilter();
-            filter.addAction("com.zxhl.gpsking.MYBROADCAST");
+            filter.addAction("com.develop.sharebook.MYBROADCAST");
             getActivity().registerReceiver(broad,filter);
 
             if(!sp.getIsVisitor()) {
@@ -473,7 +473,7 @@ public class PersonInfo extends Fragment implements View.OnClickListener{
     }
 
     public static class MyBroadcast extends BroadcastReceiver {
-        public final String board="com.zxhl.gpsking.MYBROADCAST";
+        public final String board="com.develop.sharebook.MYBROADCAST";
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(board)){

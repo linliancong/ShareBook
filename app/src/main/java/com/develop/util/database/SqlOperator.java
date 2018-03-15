@@ -74,7 +74,10 @@ public class SqlOperator {
             //设置一个事务成功的标志,如果成功就提交事务,如果没调用该方法的话那么事务回滚
             //就是上面的数据库操作撤销
             db.setTransactionSuccessful();
-        }finally{
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
             //结束一个事务
             db.endTransaction();
         }

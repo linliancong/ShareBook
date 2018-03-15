@@ -93,7 +93,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 "ISBN varchar(50),"+
                 "userID integer,"+
                 "state integer,"+
-                "date datetime,"+
+                "date varchar(50),"+
                 "remark varchar(50))");
 
         /**
@@ -109,6 +109,24 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 "userID integer,"+
                 "name varchar(50),"+
                 "remark varchar(50))");
+
+        /**
+         * 表名：message（消息表）
+         * 以下为各个字段
+         * id：消息编号
+         * userID：用户编号
+         * title：标题
+         * content：内容
+         * date：时间
+         * state：状态（1：未读，2：已读）
+         * */
+        db.execSQL("create table if not exists message"+
+                "(id integer primary key autoincrement,"+
+                "userID integer,"+
+                "title varchar(50),"+
+                "content varchar(100),"+
+                "date varchar(50),"+
+                "state integer)");
 
     }
 

@@ -20,7 +20,9 @@ import com.develop.util.AdapterUtil;
 import com.develop.util.SharedPreferenceUtils;
 import com.develop.util.database.SqlOperator;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +77,10 @@ public class Liarary extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.library_ly_new:
+                Date newTime=new Date();
+                SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                final String date=sdf.format(newTime);
+
                 View view2= getAlert(R.layout.ad_input);
                 final TextView text=view2.findViewById(R.id.ad_txt);
                 final EditText editText= view2.findViewById(R.id.ad_edit);
@@ -104,6 +110,8 @@ public class Liarary extends Fragment implements View.OnClickListener{
                             if (data.size() != 0) {
                                 map = data.get(0);
                                 if (!map.get("num").toString().equals("0")) {
+                                    op.insert("insert into message1(userID,title,content,state,date) values(?,?,?,?,?)",
+                                            new String[]{sp.getID(), "新建书库","您创建书库【"+editText.getText().toString()+"】失败！书库已存在。", "1",date});
                                     txt1.setText("书库已存在，请重试");
                                 } else {
                                     op.insert("insert into library(userID,name) values(?,?)", new String[]{sp.getID(), editText.getText().toString()});
@@ -112,8 +120,12 @@ public class Liarary extends Fragment implements View.OnClickListener{
                                     if (data.size() != 0) {
                                         map = data.get(0);
                                         if (map.get("num").toString().equals("1")) {
+                                            op.insert("insert into message1(userID,title,content,state,date) values(?,?,?,?,?)",
+                                                    new String[]{sp.getID(), "新建书库","您创建书库【"+editText.getText().toString()+"】成功！", "1",date});
                                             txt1.setText("新建成功");
                                         } else {
+                                            op.insert("insert into message1(userID,title,content,state,date) values(?,?,?,?,?)",
+                                                    new String[]{sp.getID(), "新建书库","您创建书库【"+editText.getText().toString()+"】失败！", "1",date});
                                             txt1.setText("新建失败");
                                         }
                                     }

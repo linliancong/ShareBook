@@ -125,8 +125,8 @@ public class Register extends StatusBarUtil implements View.OnClickListener,Text
                                             op.insert("insert into user(userName,passwd,email,name) values(?,?,?,?)", new String[]{user.getText().toString(),
                                                     pwd1.getText().toString(), email.getText().toString(), user.getText().toString()});
                                             Toast.makeText(context, "注册成功！返回重新登录", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(context, Login.class);
-                                            startActivity(intent);
+                                            /*Intent intent = new Intent(context, Login.class);
+                                            startActivity(intent);*/
                                             finish();
                                         }
                                     }

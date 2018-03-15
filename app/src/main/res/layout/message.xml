@@ -24,12 +24,27 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:text="未读"
+            android:text="未读消息"
             android:textSize="16sp"
             android:textColor="@color/black"
             />
 
+        <TextView
+            android:id="@+id/message_num"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@mipmap/bg_num"
+            android:layout_toLeftOf="@+id/img"
+            android:layout_centerVertical="true"
+            android:text="15"
+            android:textSize="12sp"
+            android:textColor="@color/text_white"
+            android:gravity="center"
+            android:visibility="gone"
+            />
+
         <com.develop.util.ImgTxtLayout
+            android:id="@+id/img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -67,9 +82,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:text="已读"
+            android:text="已读消息"
             android:textColor="@color/black"
             android:textSize="16sp" />
+
 
         <com.develop.util.ImgTxtLayout
             android:layout_width="wrap_content"

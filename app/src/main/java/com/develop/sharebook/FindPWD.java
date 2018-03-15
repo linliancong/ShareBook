@@ -135,8 +135,8 @@ public class FindPWD extends StatusBarUtil implements View.OnClickListener,TextW
                                         map = data.get(0);
                                         if (map.get("num").toString().equals("1")) {
                                             Toast.makeText(context, "修改成功！返回重新登录", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(context, Login.class);
-                                            startActivity(intent);
+                                            /*Intent intent = new Intent(context, Login.class);
+                                            startActivity(intent);*/
                                             finish();
                                         } else {
                                             Toast.makeText(context, "修改失败！请稍后重试", Toast.LENGTH_SHORT).show();

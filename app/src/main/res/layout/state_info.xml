@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:develop="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@color/bg_white"
+        android:clickable="true"
+        android:focusable="true"
+        >
+
+
+        <com.develop.util.ImgTxtLayout
+            android:id="@+id/state_imgtxt_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:paddingLeft="15dp"
+            develop:iconDrawable="@mipmap/back_blue"
+            develop:iconDrawablePress="@mipmap/back_blue_press"
+            develop:spacing="10dp"
+            develop:style="iconLeft"
+            develop:text="分类查看"
+            develop:textSize="18"
+            develop:textColor="@color/black"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/div_white"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="请选择"
+            android:textSize="18sp"
+            android:textColor="@color/black_text"
+            android:gravity="right"
+            android:layout_marginRight="20dp"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="40dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal"
+            android:background="@drawable/info_edit"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:gravity="center"
+
+            >
+            <Spinner
+                android:id="@+id/state_info_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:dropDownVerticalOffset="34dp"
+                android:popupBackground="@drawable/simlpe_spinner_bg"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/state_info_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:scrollbars="none"
+        android:background="@color/bg_white"
+        android:listSelector="#00000000"
+        android:stackFromBottom="false"
+        android:transcriptMode="alwaysScroll"
+        android:visibility="visible"
+        android:layout_below="@+id/state_rg_type"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/state_info_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="没有消息记录"
+        android:layout_margin="20dp"
+        android:visibility="gone"
+        />
+
+</LinearLayout>

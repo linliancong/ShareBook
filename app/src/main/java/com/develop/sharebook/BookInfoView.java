@@ -32,7 +32,9 @@ import com.develop.util.database.SqlOperator;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +74,8 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
     private static final int REQUEST_CODE_PICK_IMAGE=1;
     private static final int REQUEST_CODE_CAPTURE_CAMEIA=2;
     private static final int CODE_RESULT_REQUEST=3;
+
+    private int state=1;
 
 
     @Override
@@ -119,6 +123,10 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
 
 
         getData();
+
+        if(state==2){
+            back.setText("修改图书");
+        }
 
 
     }
@@ -195,6 +203,7 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
     private void getData() {
         Intent intent=getIntent();
         Bundle bd=intent.getExtras();
+        state=bd.getInt("tag");
         ArrayList<BookInfo> book= (ArrayList<BookInfo>) bd.getSerializable("book");
 
         if (book.get(0).getTitle()!=null){
@@ -219,6 +228,7 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
         switch (v.getId()){
             case R.id.book_btn_new:
                 update();
+                sendBroadcast(new Intent("com.develop.sharebook.MYBROADCAST2"));
                 break;
             case R.id.book_img_btn:
                 Intent intent = new Intent(Intent.ACTION_PICK);
@@ -320,6 +330,14 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
     private void update() {
         List<Map<String, String>> data = new ArrayList<>();
         Map<String, String> map = new HashMap<>();
+
+        Date newTime=new Date();
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String date=sdf.format(newTime);
+        //如果是修改图书，则先删除图书在插入
+        if(state==2){
+            op.delete("delete from bookInfo where ISBN=?",new String[]{ISBN.getText().toString()});
+        }
         //判断图书是否存在，不存在：插入
         data = op.select("select * from bookInfo where ISBN=?", new String[]{ISBN.getText().toString()});
         if (data.size() == 0) {
@@ -331,17 +349,25 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
                 if (data.size() != 0) {
                     map = data.get(0);
                     if (map.get("num").toString().equals("1")) {
+                        op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
+                                new String[]{sp.getID(), "保存书本","您已经成功保存了《"+name.getText().toString()+"》。", "1",date});
                         Toast.makeText(context, "保存成功", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
+                        op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
+                                new String[]{sp.getID(), "保存书本","您对于《"+name.getText().toString()+"》保存失败！", "1",date});
                         Toast.makeText(context, "保存失败", Toast.LENGTH_SHORT).show();
                     }
                 }
             } else {
+                op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
+                        new String[]{sp.getID(), "保存书本","您对于《"+name.getText().toString()+"》保存失败！不存在书库。", "1",date});
                 Toast.makeText(context, "书库不存在，请先创建书库", Toast.LENGTH_SHORT).show();
             }
         }else
         {
+            op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
+                    new String[]{sp.getID(), "保存书本","您对于《"+name.getText().toString()+"》保存失败！图书已存在。", "1",date});
             Toast.makeText(context, "该图书已存在", Toast.LENGTH_SHORT).show();
         }
     }

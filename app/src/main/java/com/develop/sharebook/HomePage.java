@@ -119,6 +119,7 @@ public class HomePage extends CheckPermissionsActivity implements NavigationView
                     ArrayList<BookInfo> book=new ArrayList<>();
                     book.add(bookInfo);
                     bd.putSerializable("book",book);
+                    bd.putInt("tag",1);
                     it.putExtras(bd);
                     startActivity(it);
                     Toast.makeText(getApplicationContext(),"获取书本数据成功",Toast.LENGTH_SHORT).show();
@@ -130,6 +131,7 @@ public class HomePage extends CheckPermissionsActivity implements NavigationView
                     ArrayList<BookInfo> book2=new ArrayList<>();
                     book2.add(bookInfo);
                     bd2.putSerializable("book",book2);
+                    bd2.putInt("tag",1);
                     it2.putExtras(bd2);
                     startActivity(it2);
                     Toast.makeText(getApplicationContext(),"获取书本数据失败，请手动输入",Toast.LENGTH_SHORT).show();
@@ -232,6 +234,7 @@ public class HomePage extends CheckPermissionsActivity implements NavigationView
             readImage();
         }else {
             user.setText("游客~");
+            remark.setText("您还没有登录~");
         }
 
         //检查是否更新了头像、姓名、个性签名
@@ -280,6 +283,9 @@ public class HomePage extends CheckPermissionsActivity implements NavigationView
                 startActivity(it3);*/
                     vpager.setCurrentItem(PAG_FOUR);
                     title.setText("书库");
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"你还没注册，请先注册",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.stat:
@@ -385,9 +391,13 @@ public class HomePage extends CheckPermissionsActivity implements NavigationView
             case R.id.hp_scan:
                 //这里是扫码之后的操作
                 //Toast.makeText(getApplicationContext(),"扫一扫",Toast.LENGTH_SHORT).show();
+                if(!sp.getIsVisitor()){
                 Intent intent=new Intent(context, CaptureActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivityForResult(intent,SCANNING_REQUEST_CODE);
+                }else {
+                    Toast.makeText(getApplicationContext(),"你还没注册，请先注册",Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
