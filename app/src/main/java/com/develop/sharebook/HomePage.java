@@ -23,6 +23,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -315,6 +316,21 @@ public class HomePage extends CheckPermissionsActivity implements NavigationView
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //解决onBackPressed不被执行的问题
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        //拦截返回键
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+            //判断触摸UP事件才会进行返回事件处理
+            if (event.getAction() == KeyEvent.ACTION_UP) {
+                onBackPressed();
+            }
+            //只要是返回事件，直接返回true，表示消费掉
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
     }
 
     @Override

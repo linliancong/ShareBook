@@ -1,13 +1,6 @@
 package com.develop.entity;
 
-import android.graphics.Bitmap;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.develop.util.ImgTxtLayout;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2018/3/12.
@@ -38,6 +31,8 @@ public class BookInfo implements Serializable{
     private String summary;
 
     private String imagePath;
+
+    private String libraryName;
 
     //private Bitmap image;
 
@@ -233,11 +228,18 @@ public class BookInfo implements Serializable{
     }*/
 
     /**
-     * @param image
-     *            the image to set
+     * @param
+     *
      */
     /*public void setImage(Bitmap image) {
         this.image = image;
     }*/
 
+    public String getLibraryName() {
+        return libraryName;
+    }
+
+    public void setLibraryName(String libraryName) {
+        this.libraryName = libraryName;
+    }
 }

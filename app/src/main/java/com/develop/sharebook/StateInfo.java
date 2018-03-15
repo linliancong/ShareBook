@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.develop.entity.BookInfo;
 import com.develop.util.AdapterUtil;
@@ -49,7 +48,7 @@ public class StateInfo extends StatusBarUtil {
     private ArrayList<BookInfo> bookInfos=new ArrayList<>();
     private AdapterUtil<BookInfo> adapterUtil;
 
-    private int position=0;
+    public static int positions=0;
 
     private TextView info;
 
@@ -110,7 +109,7 @@ public class StateInfo extends StatusBarUtil {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                position=position;
+                positions=position;
                 getData2(position);
 
             }
@@ -146,6 +145,8 @@ public class StateInfo extends StatusBarUtil {
                 bookInfo.setPrice(map.get("price"));
                 bookInfo.setIsbn13(map.get("ISBN"));
                 bookInfo.setImagePath(map.get("imgPath"));
+                bookInfo.setTags(map.get("tag"));
+                bookInfo.setLibraryName(map.get("name"));
 
                 bookInfos.add(bookInfo);
                 list.setVisibility(View.VISIBLE);
@@ -249,7 +250,7 @@ public class StateInfo extends StatusBarUtil {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==0x001){
-            getData2(position);
+            getData2(positions);
         }
     }
 }

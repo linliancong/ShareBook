@@ -58,7 +58,6 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
     private SqlOperator op;
     private int state=0;
     private int tag=0;
-    private String libs;
 
 
     @Override
@@ -125,6 +124,7 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
         price.setText(book.get(0).getPrice());
         isbn.setText(book.get(0).getIsbn13());
         summary.setText(book.get(0).getSummary());
+
 
         List<Map<String, String>> data = new ArrayList<>();
         Map<String, String> map = new HashMap<>();

@@ -1,6 +1,5 @@
 package com.develop.sharebook;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.develop.entity.BookInfo;
@@ -70,6 +66,9 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
     private String imgPath=null;
     private List<String> aLib=new ArrayList<>();
     private String publisher;
+
+    private String bookTag;
+    private String libraryName;
 
     private static final int REQUEST_CODE_PICK_IMAGE=1;
     private static final int REQUEST_CODE_CAPTURE_CAMEIA=2;
@@ -123,6 +122,10 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
 
 
         getData();
+        int position= adapter.getPosition(libraryName);
+        lib.setSelection(position);
+        int position2= adapter2.getPosition(bookTag);
+        tag.setSelection(position2);
 
         if(state==2){
             back.setText("修改图书");
@@ -214,6 +217,8 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
             publisher=book.get(0).getPublisher();
             summary =book.get(0).getSummary();
             imgPath=book.get(0).getImagePath();
+            bookTag=book.get(0).getTags();
+            libraryName=book.get(0).getLibraryName();
             if(imgPath!=null){
                 readImage();
             }
