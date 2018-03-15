@@ -78,7 +78,9 @@ public class State extends Fragment implements RadioGroup.OnCheckedChangeListene
             init();
 
         }
-        getData();
+        if(type==1) {
+            getData();
+        }
         return view;
     }
 

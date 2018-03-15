@@ -216,7 +216,7 @@ public class DynamicInfo extends StatusBarUtil implements View.OnClickListener {
         if (data.size() == 0) {
             op.insert("insert into bookInfo(ISBN,libraryID,bookName,author,publisher,tag,imgPath,price,summary) values(?,?,?,?,?,?,?,?,?)",
                     new String[]{book.get(0).getIsbn13(), libs, book.get(0).getTitle(), book.get(0).getAuthor(), book.get(0).getPublisher(),
-                            book.get(0).getTags(), book.get(0).getImagePath(), book.get(0).getPrice(), book.get(0).getSummary()});
+                            "编程", book.get(0).getImagePath(), book.get(0).getPrice(), book.get(0).getSummary()});
             //判断是否插入成功
             data = op.select("select count(1) num from bookInfo where ISBN=?", new String[]{book.get(0).getIsbn13()});
             if (data.size() != 0) {
