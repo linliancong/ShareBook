@@ -164,6 +164,8 @@ public class State extends Fragment implements RadioGroup.OnCheckedChangeListene
                 bookInfo.setPrice(map.get("price"));
                 bookInfo.setIsbn13(map.get("ISBN"));
                 bookInfo.setImagePath(map.get("imgPath"));
+                bookInfo.setTags(map.get("tag"));
+                bookInfo.setLibraryName(map.get("name"));
 
                 bookInfos.add(bookInfo);
 
