@@ -210,17 +210,18 @@ public class FindPWD extends StatusBarUtil implements View.OnClickListener,TextW
             @Override
             public void run() {
                 MailSendInfo mailinfo=new MailSendInfo();
-                mailinfo.setMailServerHost("smtp.163.com");
-                mailinfo.setMailServerPort("25");
+                mailinfo.setMailServerHost("smtp.qq.com");
+                mailinfo.setMailServerPort("587");
                 mailinfo.setValidate(true);
-                mailinfo.setUserName("gps579@163.com");
-                mailinfo.setPassword("5935092");
-                mailinfo.setFromAddress("gps579@163.com");
+                mailinfo.setUserName("1070335034@qq.com");
+                mailinfo.setPassword("bglmvthbwgorbbbi");
+                mailinfo.setFromAddress("1070335034@qq.com");
                 //接收者
                 mailinfo.setToAddress(email);
                 //标题
                 mailinfo.setSubject("ShareBook服务中心");
                 mailinfo.setContent(msg);
+
                 //发送邮件
                 MailSenderUtils sms=new MailSenderUtils();
                 boolean isSuccess=sms.sendTextMail(mailinfo);

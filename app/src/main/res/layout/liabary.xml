@@ -94,5 +94,47 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/black_bg"
+        />
+
+    <RelativeLayout
+        android:id="@+id/library_ly_query"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:background="@drawable/layout_pressed"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:text="查找书库"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <com.develop.util.ImgTxtLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            develop:iconDrawable="@mipmap/cs_arrow_right"
+            develop:style="iconRight"
+            develop:textSize="12"
+            develop:textColor="@color/black_overlay"
+            />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

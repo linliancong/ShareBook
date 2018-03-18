@@ -38,6 +38,7 @@ public class Liarary extends Fragment implements View.OnClickListener{
 
     private RelativeLayout show;
     private RelativeLayout build;
+    private RelativeLayout find;
 
     //弹窗所需的控件
     private AlertDialog alert;
@@ -61,8 +62,10 @@ public class Liarary extends Fragment implements View.OnClickListener{
             view = inflater.inflate(R.layout.liabary, container, false);
             show=view.findViewById(R.id.library_ly_show);
             build=view.findViewById(R.id.library_ly_new);
+            find=view.findViewById(R.id.library_ly_query);
             show.setOnClickListener(this);
             build.setOnClickListener(this);
+            find.setOnClickListener(this);
             sp=new SharedPreferenceUtils(context);
             op=new SqlOperator(context);
         }
@@ -75,6 +78,10 @@ public class Liarary extends Fragment implements View.OnClickListener{
             case R.id.library_ly_show:
                 Intent intent=new Intent(context,LiabaryShow.class);
                 startActivity(intent);
+                break;
+            case R.id.library_ly_query:
+                Intent intent2=new Intent(context,LiararyFind.class);
+                startActivity(intent2);
                 break;
             case R.id.library_ly_new:
                 Date newTime=new Date();

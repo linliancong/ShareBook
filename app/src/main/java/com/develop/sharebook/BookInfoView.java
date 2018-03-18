@@ -69,6 +69,7 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
 
     private String bookTag;
     private String libraryName;
+    private String libraryID;
 
     private static final int REQUEST_CODE_PICK_IMAGE=1;
     private static final int REQUEST_CODE_CAPTURE_CAMEIA=2;
@@ -193,7 +194,7 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
         List<Map<String, String>> data = new ArrayList<>();
         Map<String, String> map = new HashMap<>();
         //aLib=new ArrayList<>();
-        data = op.select("select id,name from library where id=1 or userId=?", new String[]{sp.getID()});
+        data = op.select("select id,name from library where userId=?", new String[]{sp.getID()});
         if (data.size()!=0) {
             for (int i = 0; i < data.size(); i++) {
                 map = data.get(i);
@@ -219,6 +220,7 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
             imgPath=book.get(0).getImagePath();
             bookTag=book.get(0).getTags();
             libraryName=book.get(0).getLibraryName();
+            libraryID=book.get(0).getLibraryID();
             if(imgPath!=null){
                 readImage();
             }
@@ -341,16 +343,18 @@ public class BookInfoView extends StatusBarUtil implements View.OnClickListener{
         String date=sdf.format(newTime);
         //如果是修改图书，则先删除图书在插入
         if(state==2){
-            op.delete("delete from bookInfo where ISBN=?",new String[]{ISBN.getText().toString()});
+            op.delete("delete from bookInfo where ISBN=? and libraryID=?",new String[]{ISBN.getText().toString(),libraryID});
         }
         //判断图书是否存在，不存在：插入
-        data = op.select("select * from bookInfo where ISBN=?", new String[]{ISBN.getText().toString()});
+
+        data = op.select("select * from bookInfo where ISBN=? and libraryID=?", new String[]{ISBN.getText().toString(), libs});
+
         if (data.size() == 0) {
             if (libs != null) {
                 op.insert("insert into bookInfo(ISBN,libraryID,bookName,author,publisher,tag,imgPath,price,summary,remark) values(?,?,?,?,?,?,?,?,?,?)",
                         new String[]{ISBN.getText().toString(), libs, name.getText().toString(), author.getText().toString(), publisher, tags, imgPath, price.getText().toString(), summary, remark.getText().toString()});
                 //判断是否插入成功
-                data = op.select("select count(1) num from bookInfo where ISBN=?", new String[]{ISBN.getText().toString()});
+                data = op.select("select count(1) num from bookInfo where ISBN=? and libraryID=?", new String[]{ISBN.getText().toString(),libs});
                 if (data.size() != 0) {
                     map = data.get(0);
                     if (map.get("num").toString().equals("1")) {

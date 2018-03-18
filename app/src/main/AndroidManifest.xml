@@ -102,6 +102,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".LiararyFind">
+            <intent-filter>
+                <action android:name="android.intent.action.LIARARYFIND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
 
 

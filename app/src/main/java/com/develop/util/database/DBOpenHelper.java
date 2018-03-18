@@ -128,6 +128,20 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 "date varchar(50),"+
                 "state integer)");
 
+        /**
+         * 表名：estimate（评价表）
+         * 以下为各个字段
+         * id：评价编号
+         * userName：用户名
+         * ISBN：ISBN
+         * estimate：评价
+         * */
+        db.execSQL("create table if not exists estimate"+
+                "(id integer primary key autoincrement,"+
+                "userName varchar(50),"+
+                "ISBN varchar(50),"+
+                "estimate varchar(100))");
+
     }
 
     @Override
@@ -136,6 +150,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL("drop table user");
         db.execSQL("drop table bookInfo");
         db.execSQL("drop table bookBorrow");
+        db.execSQL("drop table library");
+        db.execSQL("drop table message");
+        db.execSQL("drop table estimate");
         onCreate(db);
     }
 }

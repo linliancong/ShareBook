@@ -34,6 +34,10 @@ public class BookInfo implements Serializable{
 
     private String libraryName;
 
+    private String libraryID;
+
+    private String userID;
+
     //private Bitmap image;
 
 
@@ -241,5 +245,21 @@ public class BookInfo implements Serializable{
 
     public void setLibraryName(String libraryName) {
         this.libraryName = libraryName;
+    }
+
+    public String getLibraryID() {
+        return libraryID;
+    }
+
+    public void setLibraryID(String libraryID) {
+        this.libraryID = libraryID;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

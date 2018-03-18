@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
+import android.os.*;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,12 +48,15 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
     private TextView info_state;
     private Intent intent;
 
+    private TextView est;
+
     private RelativeLayout visible;
     private TextView delete;
     private TextView cancel;
     private TextView update;
     private TextView sub;
     private TextView share;
+    private TextView esti;
 
     private Context context;
     private ArrayList<BookInfo> book;
@@ -58,6 +64,24 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
     private SqlOperator op;
     private int state=0;
     private int tag=0;
+
+    //弹窗所需的控件
+    private AlertDialog alert;
+    private AlertDialog.Builder builder;
+    private LayoutInflater inflater;
+
+
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what){
+                case 0x001:
+                    getData();
+                    break;
+            }
+        }
+    };
+
 
 
     @Override
@@ -71,7 +95,7 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
     }
 
     private void init() {
-        context=getApplicationContext();
+        context=StateAll.this;
         sp=new SharedPreferenceUtils(context);
         op=new SqlOperator(context);
         back=findViewById(R.id.state_all_imgtxt_back);
@@ -84,6 +108,7 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
         isbn=findViewById(R.id.state_all_info_isbn);
         summary=findViewById(R.id.state_all_info_summary);
         info_state=findViewById(R.id.state_all_info_state);
+        est=findViewById(R.id.state_info_est);
 
         visible=findViewById(R.id.state_all_info_ly_more);
         delete =findViewById(R.id.state_all_info_save);
@@ -91,6 +116,7 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
         cancel=findViewById(R.id.state_all_info_cancel);
         update=findViewById(R.id.state_all_info_update);
         share=findViewById(R.id.state_all_info_share);
+        esti =findViewById(R.id.state_all_info_est);
 
         visible.setOnClickListener(this);
         more.setOnClickListener(this);
@@ -99,6 +125,7 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
         update.setOnClickListener(this);
         sub.setOnClickListener(this);
         share.setOnClickListener(this);
+        esti.setOnClickListener(this);
 
 
         back.setOnClickListener(new ImgTxtLayout.OnClickListener() {
@@ -143,6 +170,17 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
                 state=2;
                 info_state.setText("借阅中");
             }
+        }
+
+        //获取书本评价
+        data = op.select("select * from estimate where ISBN=?", new String[]{book.get(0).getIsbn13()});
+        if (data.size() != 0) {
+            StringBuffer sb = new StringBuffer();
+            for (int i=0;i<data.size();i++) {
+                map = data.get(i);
+                sb.append(map.get("userName")+":"+map.get("estimate")+"\n");
+            }
+            est.setText(sb.toString());
         }
 
     }
@@ -217,6 +255,44 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
                 Toast.makeText(context,"分享到朋友圈成功！",Toast.LENGTH_SHORT).show();
                 visible.setVisibility(View.GONE);
                 break;
+            case R.id.state_all_info_est:
+                View ad_view2= getAlert(R.layout.ad_input_est);
+                final EditText editText= (EditText) ad_view2.findViewById(R.id.ad_edit_pass);
+                ad_view2.findViewById(R.id.ad_btn_pass_cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //handler.sendEmptyMessage(0x0001);
+                        alert.dismiss();
+                    }
+                });
+                ad_view2.findViewById(R.id.ad_btn_pass_confirm).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //handler.sendEmptyMessage(0x0002);
+                        if(!editText.getText().toString().equals("")){
+                            //handler.sendEmptyMessage(0x003);
+                            est(editText.getText().toString());
+                            alert.dismiss();
+                        }
+                        else {
+                            alert.dismiss();
+                            View view=getAlert(R.layout.ad_pass_erro);
+                            TextView txt= (TextView) view.findViewById(R.id.ad_txt_erro2);
+                            //String name=editText.getText().toString();
+                            if(editText.getText().toString().equals("")){
+                                txt.setText("评价不能为空。");
+                            }
+                            view.findViewById(R.id.ad_btn_erro_confirm).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    alert.dismiss();
+                                }
+                            });
+                        }
+                    }
+                });
+                visible.setVisibility(View.GONE);
+                break;
         }
     }
 
@@ -230,9 +306,9 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
         Date newTime=new Date();
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String date=sdf.format(newTime);
-        op.insert("delete from bookInfo where ISBN=?", new String[]{book.get(0).getIsbn13()});
+        op.insert("delete from bookInfo where ISBN=? and libraryID=?", new String[]{book.get(0).getIsbn13(),book.get(0).getLibraryID()});
         //判断是否删除成功
-        data = op.select("select count(1) num from bookInfo where ISBN=?", new String[]{book.get(0).getIsbn13()});
+        data = op.select("select count(1) num from bookInfo where ISBN=? and libraryID=?", new String[]{book.get(0).getIsbn13(),book.get(0).getLibraryID()});
         if (data.size() != 0) {
             map = data.get(0);
             if (map.get("num").toString().equals("0")) {
@@ -261,8 +337,8 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String date=sdf.format(newTime);
 
-        op.insert("delete from bookBorrow where ISBN=?", new String[]{ book.get(0).getIsbn13()});
-        data = op.select("select count(1) num from bookBorrow where ISBN=?", new String[]{book.get(0).getIsbn13()});
+        op.insert("delete from bookBorrow where ISBN=? and userID=?", new String[]{ book.get(0).getIsbn13(),sp.getID()});
+        data = op.select("select count(1) num from bookBorrow where ISBN=? and userID=?", new String[]{book.get(0).getIsbn13(),sp.getID()});
         if (data.size() != 0) {
             map = data.get(0);
             if (map.get("num").toString().equals("0")) {
@@ -291,7 +367,7 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String date=sdf.format(newTime);
         op.insert("insert into bookBorrow(userID,ISBN,state,date) values(?,?,?,?)", new String[]{sp.getID(), book.get(0).getIsbn13(), "1",date});
-        data = op.select("select count(1) num from bookBorrow where ISBN=?", new String[]{book.get(0).getIsbn13()});
+        data = op.select("select count(1) num from bookBorrow where ISBN=? and userID=?", new String[]{book.get(0).getIsbn13(),sp.getID()});
         if (data.size() != 0) {
             map = data.get(0);
             if (map.get("num").toString().equals("1")) {
@@ -305,6 +381,33 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
             op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
                     new String[]{sp.getID(), "预约书本","您预约的《"+book.get(0).getTitle()+"》，预约失败！", "1",date});
             Toast.makeText(context, "预约失败，请稍后重试", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 评价
+     * */
+    public void est(String str){
+        List<Map<String, String>> data;
+        Map<String, String> map;
+
+        Date newTime=new Date();
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String date=sdf.format(newTime);
+        op.insert("insert into estimate(userName,ISBN,estimate) values(?,?,?)", new String[]{sp.getUserName(), book.get(0).getIsbn13(),str});
+        data = op.select("select count(1) num from estimate where ISBN=?", new String[]{book.get(0).getIsbn13()});
+        if (data.size() != 0) {
+            map = data.get(0);
+            if (!map.get("num").toString().equals("0")) {
+                op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
+                        new String[]{sp.getID(), "评价书本","您已经成功评价了《"+book.get(0).getTitle()+"》。", "1",date});
+                Toast.makeText(context, "评价成功", Toast.LENGTH_SHORT).show();
+                handler.sendEmptyMessage(0x001);
+            }
+        } else {
+            op.insert("insert into message(userID,title,content,state,date) values(?,?,?,?,?)",
+                    new String[]{sp.getID(), "评价书本","您评价的《"+book.get(0).getTitle()+"》，评价失败！", "1",date});
+            Toast.makeText(context, "评价失败，请稍后重试", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -331,5 +434,20 @@ public class StateAll extends StatusBarUtil implements View.OnClickListener {
             summary.setText(map.get("summary"));
         }
 
+    }
+
+    //定义弹窗方法
+    public View getAlert(int mLayout){
+        View ad_view;
+        //初始化Builder
+        builder=new AlertDialog.Builder(context);
+        //完成相关设置
+        inflater=LayoutInflater.from(context);
+        ad_view=inflater.inflate(mLayout,null,false);
+        builder.setView(ad_view);
+        builder.setCancelable(true);
+        alert=builder.create();
+        alert.show();
+        return ad_view;
     }
 }
